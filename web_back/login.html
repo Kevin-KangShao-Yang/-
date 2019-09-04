@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>大事件-后台登录页</title>
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <link rel="stylesheet" type="text/css" href="css/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script src="js/jquery-1.12.4.min.js"></script>
+</head>
+
+<body>
+    <div class="main_wrap">
+        <div class="header">
+            <a href="#" class="logo"><img src="images/logo.png" alt=""></a>
+            <div class="copyright">CopyRight © 2019 深圳百秀信息技术股份有限公司<br>All Rights Reserved</div>
+        </div>
+
+        <div class="login_form_con">
+            <div class="login_title"></div>
+            <form class="login_form">
+                <i class="iconfont icon-user"></i>
+                <i class="iconfont icon-key"></i>
+                <input type="text" class="input_txt" placeholder="邮箱/手机号">
+                <input type="password" class="input_pass" placeholder="密码">
+                <input type="button" class="input_sub" value="登 录">
+                <!-- <input type="submit" class="input_sub" value="登 录">    -->
+                <!-- type="submit"  表格属性submit默认自动提交,不需要自动提交改为button就行 -->
+            </form>
+        </div>
+    </div>
+
+</body>
+<script>
+    $(function () {
+        $('.input_sub').click(function () {
+            var ursName = $('.input_txt').val().replace(/ /g, '');
+            var ursPsw = $('.input_pass').val().replace(/ /g, '');
+
+            $('.input_txt').val(ursName);
+            $('.input_pass').val(ursPsw);
+            if (ursName.length < 5) {
+                alert('长度小于5');
+                $('.input_txt').focus();
+            } else if (ursPsw.length < 5) {
+                alert('长度小于5');
+                $('.input_pass').focus();
+            } else {
+                $.ajax({
+                    url: 'http://127.0.0.1:8080/admin/user/login',
+                    type: 'post',
+                    dataType: 'json',
+                    data: 'username='+ ursName +'&password='+ursPsw,
+                    success: function (backData) {
+                        console.log(backData);
+                        alert(backData.msg);
+                        if (backData.code==200) {
+                            window.location='./index.html';
+                        }else{
+                            $('.input_txt').focus();
+                            $('.input_pass').focus();
+                        }
+                    }
+                });
+
+
+
+
+            }
+        })
+    })
+
+
+
+
+
+</script>
+
+</html>
