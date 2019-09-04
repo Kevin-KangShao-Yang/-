@@ -6,10 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>大事件-后台登录页</title>
+    <link rel="stylesheet" href="js/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/reset.css">
     <link rel="stylesheet" type="text/css" href="css/iconfont.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
-    <script src="js/jquery-1.12.4.min.js"></script>
+
+    <script src="./js/jquery-1.12.4.min.js"></script>
+    <script src="./js/bootstrap/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -27,71 +30,71 @@
                 <input type="text" class="input_txt" placeholder="邮箱/手机号">
                 <input type="password" class="input_pass" placeholder="密码">
                 <input type="button" class="input_sub" value="登 录">
-                <!-- <input type="submit" class="input_sub" value="登 录">    -->
-                <!-- type="submit"  表格属性submit默认自动提交,不需要自动提交改为button就行 -->
             </form>
         </div>
+
     </div>
 
 </body>
 <script>
-//入口函数
-   $(function () {
-       $('.input_sub').click(function () {
-           //去除空字符
-           var usrName = $('.input_txt').val().replace(/ /g,'');
-           var usrPsw = $('.input_pass').val().replace(/ /g,'');
-           //去除空字符后重新赋值
-               $('.input_txt').val(usrName);
-               $('.input_pass').val(usrPsw);
-               if (usrName<5 || usrName<=0) {
-                   alert('用户名需大于5位数');
-                   //focus(),jq中鼠标会显示在原来位置跳动
-                   $('.input_txt').focus();
-               }else if (usrPsw<6 || usrName<=0 ){
-                   alert('密码需大于6位数');
-                   $('.input_pass').focus();
-               }else{
-                   $.ajax({
-                   url:'http://127.0.0.1:8080/admin/user/login',
-                   type:'post',
-                   dataType:'json',
-                   data:{
-                       username:usrName,
-                       password:usrPsw,
-                   },
-                   success: function(backData){
-                       //正确或错误可以提示客户
-                       alert(backData.msg);
-                       if (backData.code==200) {
-                           //跳转页面
-                           window.location='./index.html'
-                       }
-                       //如果密码或用户名错误,鼠标会显示在用户名处跳动
-                       $('.input_txt').focus();
-                   }
-                   });
-               }
-       })
-   })
 
-//用户框按回车键操作
+ //入口函数
+ $(function () {
+        //登录点击事件
+        $('.input_sub').click(function () {
+            //获取用户名及密码  replace(/ /g,'') 将空格替换成空字符
+            var usrName = $('.input_txt').val().replace(/ /g, '');
+            var usrPsw = $('.input_pass').val().replace(/ /g, '');
+            //再将获取用户名及密码重新赋值,以便去掉空格
+            $('.input_txt').val(usrName);
+            $('.input_pass').val(usrPsw);
+            //判断用户名及密码是否符合要求,符合要求再执行下面代码
+            if (usrName.length < 5) {
+                alert('用户名必须大于5位数');
+                //focus()  jq语法,鼠标默认选中回到用户名输入
+                $('.input_txt').focus();
+            } else if (usrPsw.length < 6) {
+                alert('密码必须大于6位数');
+                //focus()  jq语法,鼠标默认选中回到密码输入
+                $('.input_pass').focus();
+            } else {
+                $.ajax({
+                    url: 'http://127.0.0.1:8080/admin/user/login',
+                    method: 'post',               
+                    data: {
+                        username:usrName,
+                        password:usrPsw,
+                    },
+                    success: function (backData) {
+                        alert(backData.msg);
+                        if (backData.code == 200) {
+                            window.location = './index.html';
+                        }
+                        //focus()  jq语法,当客户输入错误是 鼠标默认选中回到用户名输入
+                      $('.input_txt').focus();
+                    }
+                });
+            }
+        })
+    })
+
+//当客户输入用户名及密码框时按回车键启动登录按钮自动执行点击事件
+//给输入用户名框设置获取键值对事件
 $('.input_txt').keydown(function (e) {
+    //获取键值对判断是不是等于数值13,是就执行以下代码
     if (e.keyCode==13) {
-        //trigger(),jq自调用方法
-        $('.input_sub').trigger('click');
+       // trigger(),jq语法,自调用方法,自动执行登录的点击事件
+        $('.input_sub').trigger('click');      
     }
 })
-//密码框按回车键操作
+//给输入密码框设置获取键值对事件
 $('.input_pass').keydown(function (e) {
+    //获取键值对判断是不是等于数值13,是就执行以下代码
     if (e.keyCode==13) {
-        $('.input_sub').trigger('click');
+       // trigger(),jq语法,自调用方法,自动执行登录的点击事件
+        $('.input_sub').trigger('click');      
     }
 })
-
-
-
-
 </script>
 
 </html>
