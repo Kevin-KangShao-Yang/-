@@ -101,6 +101,30 @@
         }
 
     </script>
+<script>
+$('.iconfont').parent().click(function () {
+   $.ajax({
+   url:'http://127.0.0.1:8080/admin/user/logout',
+   type:'post',
+   dataType:'json',
+   success: function(backData){
+    if (backData.code == 200) {
+        alert(backData.msg);
+        window.location='./login.html';
+    }
+   }
+   });
+})
 
+$.ajax({
+url:'http://127.0.0.1:8080/admin/user/info',
+type:'get',
+success: function(backData){
+    $('.user_info img').attr('src',backData.data.userPic);
+    $('.user_info span').html('欢迎&nbsp;&nbsp;'+backData.data.nickname);
+}
+});
+
+</script>
 </body>
 </html>
