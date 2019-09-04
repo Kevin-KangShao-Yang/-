@@ -35,40 +35,59 @@
 
 </body>
 <script>
-    $(function () {
-        $('.input_sub').click(function () {
-            var ursName = $('.input_txt').val().replace(/ /g, '');
-            var ursPsw = $('.input_pass').val().replace(/ /g, '');
+//入口函数
+   $(function () {
+       $('.input_sub').click(function () {
+           //去除空字符
+           var usrName = $('.input_txt').val().replace(/ /g,'');
+           var usrPsw = $('.input_pass').val().replace(/ /g,'');
+           //去除空字符后重新赋值
+               $('.input_txt').val(usrName);
+               $('.input_pass').val(usrPsw);
+               if (usrName<5 || usrName<=0) {
+                   alert('用户名需大于5位数');
+                   //focus(),jq中鼠标会显示在原来位置跳动
+                   $('.input_txt').focus();
+               }else if (usrPsw<6 || usrName<=0 ){
+                   alert('密码需大于6位数');
+                   $('.input_pass').focus();
+               }else{
+                   $.ajax({
+                   url:'http://127.0.0.1:8080/admin/user/login',
+                   type:'post',
+                   dataType:'json',
+                   data:{
+                       username:usrName,
+                       password:usrPsw,
+                   },
+                   success: function(backData){
+                       //正确或错误可以提示客户
+                       alert(backData.msg);
+                       if (backData.code==200) {
+                           //跳转页面
+                           window.location='./index.html'
+                       }
+                       //如果密码或用户名错误,鼠标会显示在用户名处跳动
+                       $('.input_txt').focus();
+                   }
+                   });
+               }
+       })
+   })
 
-            $('.input_txt').val(ursName);
-            $('.input_pass').val(ursPsw);
-            if (ursName.length < 5) {
-                alert('长度小于5');
-                $('.input_txt').focus();
-            } else if (ursPsw.length < 5) {
-                alert('长度小于5');
-                $('.input_pass').focus();
-            } else {
-                $.ajax({
-                    url: 'http://127.0.0.1:8080/admin/user/login',
-                    type: 'post',
-                    dataType: 'json',
-                    data: 'username='+ ursName +'&password='+ursPsw,
-                    success: function (backData) {
-                        console.log(backData);
-                        alert(backData.msg);
-                        if (backData.code==200) {
-                            window.location='./index.html';
-                        }else{
-                            $('.input_txt').focus();
-                            $('.input_pass').focus();
-                        }
-                    }
-                });
-            }
-        })
-    })
-
+//用户框按回车键操作
+$('.input_txt').keydown(function (e) {
+    if (e.keyCode==13) {
+        //trigger(),jq自调用方法
+        $('.input_sub').trigger('click');
+    }
+})
+//密码框按回车键操作
+$('.input_pass').keydown(function (e) {
+    if (e.keyCode==13) {
+        $('.input_sub').trigger('click');
+    }
+})
 
 
 
