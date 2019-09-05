@@ -129,40 +129,47 @@
         }
 
     </script>
-<script>
-    //   用户点击退出触发事件
-  $('.icon-tuichu').parent().click(function () {
-   $.ajax({
-   url:'http://127.0.0.1:8080/admin/user/logout',
-   type:'post',
-   dataType:'json',
-   success: function(backData){
-       console.log(backData);
-    if (backData.code==200) {
-        //提示并退出到登录页面
-        alert(backData.msg);
-        window.location='./login.html';
-    }
-   }
-   });
-  })
+    <script>
+        //   用户点击退出触发事件
+        $('.icon-tuichu').parent().click(function () {
+            $.ajax({
+                url: 'http://127.0.0.1:8080/admin/user/logout',
+                type: 'post',
+                dataType: 'json',
+                success: function (backData) {
+                    console.log(backData);
+                    if (backData.code == 200) {
+                        //提示并退出到登录页面
+                        alert(backData.msg);
+                        window.location = './login.html';
+                    }
+                }
+            });
+        })
 
 
-//页面加载将服务器中的内容渲染到页面
-  $.ajax({
-  url:'http://127.0.0.1:8080/admin/user/info',
-  type:'get',
-  dataType:'json',
-  success: function(backData){
-      $('.user_info span').html('欢迎&nbsp;&nbsp;'+backData.data.nickname);
-      $('.user_info img').attr('src','http://localhost:8080/icon.jpg');
-      $('.user_center_link img').attr('src','http://localhost:8080/icon.jpg')
-  }
-  });
-  
-  
-  
-  </script>
+
+        //将渲染用户名及图片封装,方便修改信息的时候调用刷新
+        function loadUserInfo() {
+            //页面加载将服务器中的内容渲染到页面
+            $.ajax({
+                url: 'http://127.0.0.1:8080/admin/user/info',
+                type: 'get',
+                dataType: 'json',
+                success: function (backData) {
+                    $('.user_info span').html('欢迎&nbsp;&nbsp;' + backData.data.nickname);
+                    $('.user_info img').attr('src', backData.data.userPic);
+                    $('.user_center_link img').attr('src', backData.data.userPic);
+                }
+            });
+        }
+
+  // 页面一加载,马上调用方法渲染页面
+ loadUserInfo();
+
+
+
+    </script>
 </body>
 
 </html>
