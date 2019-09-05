@@ -18,8 +18,8 @@
     <div class="sider">
         <a href="#" class="logo"><img src="images/logo02.png" alt="logo"></a>
         <div class="user_info">
-            <img src="" alt="person">
-            <span></span>
+            <img src="images/2.jpg" alt="person">
+            <span>欢迎&nbsp;&nbsp;李思思</span>
             <b>管理员</b>
         </div>
         <div class="menu">
@@ -56,9 +56,29 @@
     </div>
 
     <div class="main" id="main_body">
-        <iframe src="" frameborder="0" id="main_frame" name="main_frame" frameborder="0"
+        <iframe src="main_count.html" frameborder="0" id="main_frame" name="main_frame" frameborder="0"
             scrolling="auto"></iframe>
     </div>
+
+    <!-- bootstrap 模态框 的 html 代码 -->
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">系统提示</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- 消息框内容区域 -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="btnOK">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
     <script>
         var $level01 = $('.level01');
@@ -109,7 +129,7 @@
         }
 
     </script>
-  <script>
+<script>
     //   用户点击退出触发事件
   $('.icon-tuichu').parent().click(function () {
    $.ajax({
