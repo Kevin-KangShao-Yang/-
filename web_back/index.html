@@ -135,7 +135,7 @@
             $.ajax({
                 url: 'http://127.0.0.1:8080/admin/user/logout',
                 type: 'post',
-                dataType: 'json',
+                dataType: 'json',        
                 success: function (backData) {
                     console.log(backData);
                     if (backData.code == 200) {
@@ -153,7 +153,7 @@
         function loadUserInfo() {
             //页面加载将服务器中的内容渲染到页面
             $.ajax({
-                url: 'http://127.0.0.1:8080/admin/user/info',
+                url: 'http://127.0.0.1:8080/admin/user/info',   
                 type: 'get',
                 dataType: 'json',
                 success: function (backData) {
@@ -165,7 +165,9 @@
         }
 
   // 页面一加载,马上调用方法渲染页面
- loadUserInfo();
+$(function () {
+    loadUserInfo();
+})
 
 
 
