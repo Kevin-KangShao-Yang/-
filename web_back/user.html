@@ -120,7 +120,7 @@
                 if (backData.code == 200) {
                     alert(backData.msg);
                     //调用并刷新首页中的用户名及图片
-                    window.parent.loadUserInfo();
+                    window.top.loadUserInfo();
                     //将更改的内容渲染到现在页面
                     getContent();
                 };
